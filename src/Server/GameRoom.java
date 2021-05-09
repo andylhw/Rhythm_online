@@ -5,9 +5,12 @@
  */
 package Server;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class GameRoom {
 
     private int id; // 룸 ID
@@ -23,6 +26,7 @@ public class GameRoom {
     public GameRoom(GameUser user) { // 유저가 방을 만들때
         userList = new ArrayList();
         user.enterRoom(this);
+        System.out.println(user.getNickName()+"이 방을 생성하였습니다.");
         userList.add(user); // 유저를 추가시킨 후
         this.roomOwner = user; // 방장을 유저로 만든다.
     }
@@ -39,8 +43,8 @@ public class GameRoom {
     }
 
     public void enterUser(GameUser user) {
-        user.enterRoom(this);
         userList.add(user);
+        System.out.println(user.getNickName()+"이 입장하였습니다.");
     }
 
     public void enterUser(List<GameUser> users) {
@@ -57,7 +61,7 @@ public class GameRoom {
     public void exitUser(GameUser user) {
         user.exitRoom(this);
         userList.remove(user); // 해당 유저를 방에서 내보냄
-
+        System.out.println(user.getNickName()+"이 퇴장하였습니다.");
         if (userList.size() < 1) { // 모든 인원이 다 방을 나갔다면
             RoomManager.removeRoom(this); // 이 방을 제거한다.
             return;
@@ -65,6 +69,7 @@ public class GameRoom {
 
         if (userList.size() < 2) { // 방에 남은 인원이 1명 이하라면
             this.roomOwner = (GameUser) userList.get(0); // 리스트의 첫번째 유저가 방장이 된다.
+            System.out.println(userList.get(0).getNickName()+"이 방장이 되었습니다.");
             return;
         }
     }
@@ -102,6 +107,7 @@ public class GameRoom {
 
     public void setOwner(GameUser gameUser) {
         this.roomOwner = gameUser; // 특정 사용자를 방장으로 변경한다.
+        System.out.println(gameUser.getNickName()+"이 방장이 되였습니다.");
     }
 
     public void setRoomName(String name) { // 방 이름을 설정

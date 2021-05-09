@@ -5,10 +5,14 @@
  */
 package Server;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.net.Socket;
 
 // 실제로 게임을 플레이하는 유저의 클래스이다.
-
+@Getter
+@Setter
 public class GameUser {
 
     private int id; 			// Unique ID
