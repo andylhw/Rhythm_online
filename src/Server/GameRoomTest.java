@@ -5,9 +5,15 @@ import Server.GameRoom;
 import Server.GameUser;
 import Server.RoomManager;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 public class GameRoomTest {
 
     public static void roomCreateTest(){
+
 
         // #1. 유저 로그인
         GameUser gameUser = new GameUser(1, "gompang");
@@ -65,6 +71,15 @@ public class GameRoomTest {
 
         // #5. 서버에서 무언가의 이유로 gameRoom을 삭제함(모든 유저 퇴장처리)
         RoomManager.removeRoom(gameRoom);
+    }
+
+    public static void socketTest() throws IOException {
+        System.out.println("Server init...");
+        ServerSocket s_socket = new ServerSocket(8888);
+        Socket c_socket = s_socket.accept();
+        OutputStream output_data = c_socket.getOutputStream();
+        String sendData = "Welcome to My Server";
+        output_data.write(sendData.getBytes());
     }
 
 }
